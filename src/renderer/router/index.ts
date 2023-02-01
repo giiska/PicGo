@@ -43,6 +43,14 @@ export default createRouter({
           }
         },
         {
+          path: 'media-list',
+          component: () => import(/* webpackChunkName: "MediaList" */ '@/pages/MediaList.vue'),
+          name: config.MEDIA_LIST_PAGE,
+          meta: {
+            keepAlive: true
+          }
+        },
+        {
           path: 'setting',
           component: () => import(/* webpackChunkName: "setting" */ '@/pages/PicGoSetting.vue'),
           name: config.SETTING_PAGE

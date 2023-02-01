@@ -57,6 +57,12 @@
             </el-icon>
             <span>{{ $T('GALLERY') }}</span>
           </el-menu-item>
+          <el-menu-item :index="routerConfig.MEDIA_LIST_PAGE">
+            <el-icon>
+              <PictureFilled />
+            </el-icon>
+            <span>{{ $T('MEDIA_LIST_PAGE') }}</span>
+          </el-menu-item>
           <el-sub-menu
             index="sub-menu"
           >

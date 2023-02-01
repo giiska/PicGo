@@ -1,4 +1,5 @@
 export const GALLERY_PAGE = 'GalleryPage'
+export const MEDIA_LIST_PAGE = 'MediaListPage'
 export const TRAY_PAGE = 'TrayPage'
 export const RENAME_PAGE = 'RenamePage'
 export const MINI_PAGE = 'MiniPage'

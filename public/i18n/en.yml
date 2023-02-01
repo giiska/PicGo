@@ -30,6 +30,7 @@ CURRENT_PICBED: Current Picbed
 CHOOSE_YOUR_DEFAULT_PICBED: 'Choose ${d} as your default picbed:'
 UPLOAD_AREA: Upload Area
 GALLERY: Gallery
+MEDIA_LIST_PAGE: List
 PICBEDS_SETTINGS: Picbeds Settings
 PICGO_SETTINGS: PicGo Settings
 PLUGIN_SETTINGS: Plugins Settings
