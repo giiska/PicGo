@@ -36,6 +36,7 @@
       class="main-content"
     >
       <el-col
+        :span="3"
         class="side-bar-menu"
       >
         <el-menu
@@ -105,9 +106,9 @@
         </el-icon>
       </el-col>
       <el-col
-        :span="19"
-        :offset="5"
-        style="height: 428px"
+        :span="21"
+        :offset="3"
+        style="height: calc(100vh - 30px)"
         class="main-wrapper"
         :class="{ 'darwin': os === 'darwin' }"
       >
@@ -432,7 +433,6 @@ $darwinBg = transparentify(#172426, #000, 0.7)
     height calc(100vh - 22px)
     overflow-x hidden
     overflow-y auto
-    width 170px
     .info-window
       cursor pointer
       position fixed

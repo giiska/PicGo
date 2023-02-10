@@ -1,5 +1,5 @@
 <template>
-  <div id="gallery-view">
+  <div id="media-list-view">
     <div class="view-title">
       {{ $T('MEDIA_LIST_PAGE') }} - {{ filterList.length }}
       <el-icon
@@ -36,11 +36,27 @@
         >
           {{ item.fileName }}
         </div>
+        <div
+          class="gallery-list-copy cursor-pointer"
+          :title="item.fileName"
+          @click="copy(item, true)"
+        >
+          复制整个URL
+        </div>
         <div class="gallery-list-createat">
           {{ dayjs(item.createdAt).format('MM-DD HH:mm:ss') }}
         </div>
         <div class="gallery-list-extname">
           {{ item.extname }}
+        </div>
+        <div class="gallery-list-size">
+          {{ item.width }}x{{ item.height }}
+        </div>
+        <div class="gallery-list-size">
+          <a
+            href="#"
+            @click.prevent="handleOpenUrl(item.imgUrl)"
+          >浏览器打开</a>
         </div>
         <div v-if="false">
           <el-icon
@@ -57,17 +73,17 @@
           </el-icon>
         </div>
       </div>
-      <div class="block">
-        <el-pagination
-          v-model:current-page="currentPage"
-          :page-sizes="[6,10,20]"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next"
-          :total="images.length"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
-      </div>
+    </div>
+    <div class="block">
+      <el-pagination
+        v-model:current-page="currentPage"
+        :page-sizes="[6,10,20]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next"
+        :total="images.length"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </div>
     <el-dialog
       v-model="dialogVisible"
@@ -99,12 +115,14 @@ import { PASTE_TEXT, GET_PICBEDS } from '#/events/constants'
 import { CaretBottom, Document, Edit, CaretTop } from '@element-plus/icons-vue'
 import {
   ipcRenderer,
-  IpcRendererEvent
+  IpcRendererEvent,
+  shell
 } from 'electron'
 import { computed, nextTick, onActivated, onBeforeUnmount, onBeforeMount, reactive, ref, watch } from 'vue'
 import { getConfig, sendToMain } from '@/utils/dataSender'
 import { onBeforeRouteUpdate } from 'vue-router'
 import { T as $T } from '@/i18n/index'
+
 import $$db from '@/utils/db'
 const images = ref<ImgInfo[]>([])
 const dialogVisible = ref(false)
@@ -120,7 +138,7 @@ const gallerySliderControl = reactive({
 const choosedPicBed = ref<string[]>([])
 const lastChoosed = ref<number>(-1)
 const currentPage = ref<number>(1)
-const pageSize = ref<number>(6)
+const pageSize = ref<number>(10)
 const isShiftKeyPress = ref<boolean>(false)
 const searchText = ref<string>('')
 const handleBarActive = ref<boolean>(false)
@@ -235,8 +253,8 @@ function changeZIndexForGallery (isOpen: boolean) {
   }
 }
 
-async function copy (item: ImgInfo) {
-  const copyLink = await ipcRenderer.invoke(PASTE_TEXT, item)
+async function copy (item: ImgInfo, copyFull: boolean = false) {
+  const copyLink = await ipcRenderer.invoke(PASTE_TEXT, item, true, copyFull)
   const obj = {
     title: $T('COPY_LINK_SUCCEED'),
     body: copyLink
@@ -301,6 +319,10 @@ function handleSizeChange (val) {
 function handleCurrentChange (val) {
   console.log(`current page: ${val}`)
 }
+
+function handleOpenUrl (url?: string) {
+  url && shell.openExternal(url)
+}
 </script>
 <script lang="ts">
 export default {
@@ -360,27 +382,28 @@ export default {
       cursor pointer
       background #44B363
       color #fff
-#gallery-view
+#media-list-view
   position relative
+  display flex
+  flex-direction column
+  height 100%
   .round
     border-radius 14px
   .pull-right
     float right
   .gallery-list
-    height 360px
+    flex  1
     box-sizing border-box
     padding 8px 0
     padding-left 20px
     overflow-y auto
     overflow-x hidden
-    position absolute
-    top: 38px
     transition all .2s ease-in-out .1s
     width 100%
     color #fff
     .gallery-list-item
       margin-bottom 4px
-      height 120px
+      height 100px
       display flex
       > div
         padding 0 10px
@@ -429,14 +452,18 @@ export default {
           &:hover
             color #F15140
     &__file-name
-      width 100px
+      width 150px
       word-break: break-word;
       color #ddd
       font-size 14px
+    .gallery-list-copy
+      width 90px
+    .gallery-list-copy
     .gallery-list-createat
+    .gallery-list-extname
+    .gallery-list-size
       font-size 14px
     .gallery-list-extname
-      font-size 14px
       flex-shrink none
   .handle-bar
     color #ddd

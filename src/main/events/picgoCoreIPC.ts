@@ -343,10 +343,14 @@ const handlePicGoGalleryDB = () => {
     event.sender.send(PICGO_REMOVE_BY_ID_DB, res, callbackId)
   })
 
-  ipcMain.handle(PASTE_TEXT, async (_, item: ImgInfo, copy = true) => {
+  ipcMain.handle(PASTE_TEXT, async (_, item: ImgInfo, copy = true, copyFull = false) => {
     const pasteStyle = picgo.getConfig<IPasteStyle>('settings.pasteStyle') || IPasteStyle.MARKDOWN
     const customLink = picgo.getConfig<string>('settings.customLink')
-    const txt = pasteTemplate(pasteStyle, item, customLink)
+    let txt = pasteTemplate(pasteStyle, item, customLink)
+    if (!copyFull) {
+      // TODO: todo_xjf 变成配置？
+      txt = txt.replace('https://static.coros.com/coros-v2', '@assets')
+    }
     if (copy) {
       clipboard.writeText(txt)
     }

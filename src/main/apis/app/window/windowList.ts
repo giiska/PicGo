@@ -60,8 +60,8 @@ windowList.set(IWindowList.SETTING_WINDOW, {
   multiple: false,
   options () {
     const options: IBrowserWindowOptions = {
-      height: 450,
-      width: 800,
+      height: 800,
+      width: 1200,
       show: false,
       frame: true,
       center: true,
