@@ -52,12 +52,12 @@
             </el-icon>
             <span>{{ $T('UPLOAD_AREA') }}</span>
           </el-menu-item>
-          <el-menu-item :index="routerConfig.GALLERY_PAGE">
+          <!-- <el-menu-item :index="routerConfig.GALLERY_PAGE">
             <el-icon>
               <PictureFilled />
             </el-icon>
             <span>{{ $T('GALLERY') }}</span>
-          </el-menu-item>
+          </el-menu-item> -->
           <el-menu-item :index="routerConfig.MEDIA_LIST_PAGE">
             <el-icon>
               <PictureFilled />

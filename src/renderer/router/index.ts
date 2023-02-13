@@ -34,14 +34,14 @@ export default createRouter({
           component: () => import(/* webpackChunkName: "Other" */ '@/pages/picbeds/index.vue'),
           name: config.PICBEDS_PAGE
         },
-        {
-          path: 'gallery',
-          component: () => import(/* webpackChunkName: "GalleryView" */ '@/pages/Gallery.vue'),
-          name: config.GALLERY_PAGE,
-          meta: {
-            keepAlive: true
-          }
-        },
+        // {
+        //   path: 'gallery',
+        //   component: () => import(/* webpackChunkName: "GalleryView" */ '@/pages/Gallery.vue'),
+        //   name: config.GALLERY_PAGE,
+        //   meta: {
+        //     keepAlive: true
+        //   }
+        // },
         {
           path: 'media-list',
           component: () => import(/* webpackChunkName: "MediaList" */ '@/pages/MediaList.vue'),

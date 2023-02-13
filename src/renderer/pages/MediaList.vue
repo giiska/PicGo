@@ -34,19 +34,25 @@
           :title="item.fileName"
           @click="copy(item)"
         >
-          {{ item.fileName }}
+          <a
+            href="#"
+            @click.prevent
+          >{{ item.fileName }}</a>
         </div>
         <div
           class="gallery-list-copy cursor-pointer"
           :title="item.fileName"
           @click="copy(item, true)"
         >
-          复制整个URL
+          <a
+            href="#"
+            @click.prevent
+          >复制整个URL</a>
         </div>
         <div class="gallery-list-createat">
           {{ dayjs(item.createdAt).format('MM-DD HH:mm:ss') }}
         </div>
-        <div class="gallery-list-extname">
+        <div class="gallery-list-extname ">
           {{ item.extname }}
         </div>
         <div class="gallery-list-size">
@@ -330,12 +336,7 @@ export default {
 }
 </script>
 <style lang='stylus'>
-.PhotoSlider
-  &__BannerIcon
-    &:nth-child(1)
-      display none
-  &__Counter
-    margin-top 20px
+
 .view-title
   color #eee
   font-size 20px
@@ -348,7 +349,7 @@ export default {
     transition all .2s ease-in-out
     &.active
       transform: rotate(180deg)
-#gallery-view
+#media-list-view
   height 100%
   .cursor-pointer
     cursor pointer
@@ -414,7 +415,6 @@ export default {
     &__item
       flex 1
       transition all .2s ease-in-out
-      cursor pointer
       overflow hidden
       display flex
       margin-bottom 6px
@@ -426,8 +426,6 @@ export default {
         opacity 0
         width 100%
         z-index -1
-      &:hover
-        transform scale(1.1)
       &-img
         // width 100%
         object-fit cover
@@ -463,6 +461,10 @@ export default {
     .gallery-list-extname
     .gallery-list-size
       font-size 14px
+    .gallery-list-extname
+      width 40px
+    .gallery-list-size
+      width 70px
     .gallery-list-extname
       flex-shrink none
   .handle-bar
