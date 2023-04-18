@@ -23,5 +23,8 @@
     "source.fixAll.eslint": true
   },
   "editor.formatOnSave": false,
-  "git.postCommitCommand": "none"
+  "git.postCommitCommand": "none",
+  "files.exclude": {
+    "dist_electron/**": true
+  }
 }

@@ -21,7 +21,7 @@
         class="gallery-list-item"
       >
         <div
-          class="gallery-list__item"
+          class="gallery-list__img-col"
           @click="zoomImage(index)"
         >
           <img
@@ -404,21 +404,25 @@ export default {
     color #fff
     .gallery-list-item
       margin-bottom 4px
-      height 100px
+      height 250px
       display flex
+      align-items center
       > div
         padding 0 10px
+      a
+        color #fff
     &.small
       height: 287px
       top: 113px
 
-    &__item
+    &__img-col
       flex 1
       transition all .2s ease-in-out
       overflow hidden
       display flex
       margin-bottom 6px
       color #fff
+      height 250px
       &-fake
         position absolute
         top 0
@@ -427,9 +431,7 @@ export default {
         width 100%
         z-index -1
       &-img
-        // width 100%
-        object-fit cover
-        min-width 50%
+        max-height 250px
     &__tool-panel
       color #ddd
       margin-bottom 4px

@@ -98,6 +98,7 @@
             <span>{{ $T('PLUGIN_SETTINGS') }}</span>
           </el-menu-item>
         </el-menu>
+        <Upload />
         <el-icon
           class="info-window"
           @click="openMenu"
@@ -220,6 +221,7 @@ import {
   CirclePlus,
   Close
 } from '@element-plus/icons-vue'
+import Upload from '@/pages/Upload.vue'
 import { ElMessage as $message } from 'element-plus'
 import { T } from '@/i18n/index'
 import { ref, onBeforeUnmount, Ref, onBeforeMount, watch, nextTick, reactive } from 'vue'
