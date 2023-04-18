@@ -15,6 +15,23 @@
       class="gallery-list"
       :class="{ small: handleBarActive }"
     >
+      <photo-slider
+        :items="filterList"
+        :visible="gallerySliderControl.visible"
+        :index="gallerySliderControl.index"
+        :should-transition="true"
+        @change-index="zoomImage"
+        @click-mask="handleClose"
+        @close-modal="handleClose"
+      />
+      <div
+        ref="topestLayerRef"
+        class="topest-layer"
+      >
+        <button @click="copy(filterList[gallerySliderControl.index])">
+          copy me
+        </button>
+      </div>
       <div
         v-for="(item, index) in filterList"
         :key="item.id"
@@ -124,7 +141,7 @@ import {
   IpcRendererEvent,
   shell
 } from 'electron'
-import { computed, nextTick, onActivated, onBeforeUnmount, onBeforeMount, reactive, ref, watch } from 'vue'
+import { computed, nextTick, onActivated, onBeforeUnmount, onBeforeMount, reactive, ref, watch, onMounted } from 'vue'
 import { getConfig, sendToMain } from '@/utils/dataSender'
 import { onBeforeRouteUpdate } from 'vue-router'
 import { T as $T } from '@/i18n/index'
@@ -172,6 +189,12 @@ onBeforeMount(async () => {
 
   document.addEventListener('keydown', handleDetectShiftKey)
   document.addEventListener('keyup', handleDetectShiftKey)
+})
+const topestLayerRef = ref(null)
+onMounted(() => {
+  if (topestLayerRef.value) {
+    document.body.appendChild(topestLayerRef.value)
+  }
 })
 
 function handleDetectShiftKey (event: KeyboardEvent) {
@@ -247,6 +270,11 @@ function zoomImage (index: number) {
   gallerySliderControl.index = index
   gallerySliderControl.visible = true
   changeZIndexForGallery(true)
+}
+function handleClose () {
+  gallerySliderControl.index = 0
+  gallerySliderControl.visible = false
+  changeZIndexForGallery(false)
 }
 
 function changeZIndexForGallery (isOpen: boolean) {
@@ -337,6 +365,20 @@ export default {
 </script>
 <style lang='stylus'>
 
+.topest-layer
+  position fixed
+  top 30px
+  left 160px
+  z-index 2001
+  height 20px
+
+.PhotoSlider
+  &__BannerIcon
+    &:nth-child(1)
+      display none
+  &__Counter
+    margin-top 20px
+
 .view-title
   color #eee
   font-size 20px
@@ -410,7 +452,9 @@ export default {
       > div
         padding 0 10px
       a
-        color #fff
+        color #999
+        &:active
+          color red
     &.small
       height: 287px
       top: 113px
